@@ -127,7 +127,7 @@ export default function ProfileScreen({ navigation }) {
               haptics.medium();
               navigation
                 .getParent()
-                ?.navigate('Terminal', { screen: 'Register' });
+                ?.navigate('Dashboard', { screen: 'Register' });
             }}
           >
             <Text style={styles.registerBtnText}>Register Agent</Text>

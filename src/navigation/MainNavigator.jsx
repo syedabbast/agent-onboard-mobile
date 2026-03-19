@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, StyleSheet } from 'react-native';
 import { COLORS } from '../theme/colors';
-import { FONTS } from '../theme/typography';
 
 import DashboardScreen from '../screens/Main/DashboardScreen';
 import ScanScreen from '../screens/Main/ScanScreen';
@@ -15,20 +14,20 @@ import AuditScreen from '../screens/Main/AuditScreen';
 import RegisterScreen from '../screens/Onboarding/RegisterScreen';
 
 const Tab = createBottomTabNavigator();
-const TerminalStack = createNativeStackNavigator();
+const DashboardStack = createNativeStackNavigator();
 const ScanStack = createNativeStackNavigator();
 const DirectoryStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 
-function TerminalStackScreen() {
+function DashboardStackScreen() {
   return (
-    <TerminalStack.Navigator screenOptions={{ headerShown: false }}>
-      <TerminalStack.Screen name="Dashboard" component={DashboardScreen} />
-      <TerminalStack.Screen name="Session" component={SessionScreen} />
-      <TerminalStack.Screen name="Connect" component={ConnectScreen} />
-      <TerminalStack.Screen name="Audit" component={AuditScreen} />
-      <TerminalStack.Screen name="Register" component={RegisterScreen} />
-    </TerminalStack.Navigator>
+    <DashboardStack.Navigator screenOptions={{ headerShown: false }}>
+      <DashboardStack.Screen name="DashboardHome" component={DashboardScreen} />
+      <DashboardStack.Screen name="Session" component={SessionScreen} />
+      <DashboardStack.Screen name="Connect" component={ConnectScreen} />
+      <DashboardStack.Screen name="Audit" component={AuditScreen} />
+      <DashboardStack.Screen name="Register" component={RegisterScreen} />
+    </DashboardStack.Navigator>
   );
 }
 
@@ -60,10 +59,10 @@ function ProfileStackScreen() {
 
 function TabIcon({ label, focused }) {
   const icons = {
-    Terminal: focused ? '■' : '□',
-    'Scan Gate': focused ? '◉' : '○',
-    Directory: focused ? '◆' : '◇',
-    'My Pass': focused ? '●' : '○',
+    Dashboard: focused ? '⬛' : '⬜',
+    Scan: focused ? '📷' : '📷',
+    Directory: focused ? '🔍' : '🔎',
+    Profile: focused ? '👤' : '👤',
   };
   return (
     <Text style={[styles.tabIcon, focused && styles.tabIconActive]}>
@@ -82,14 +81,14 @@ export default function MainNavigator() {
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabLabel,
         tabBarIcon: ({ focused }) => (
-          <TabIcon label={route.agent_name} focused={focused} />
+          <TabIcon label={route.name} focused={focused} />
         ),
       })}
     >
-      <Tab.Screen name="Terminal" component={TerminalStackScreen} />
-      <Tab.Screen name="Scan Gate" component={ScanStackScreen} />
+      <Tab.Screen name="Dashboard" component={DashboardStackScreen} />
+      <Tab.Screen name="Scan" component={ScanStackScreen} />
       <Tab.Screen name="Directory" component={DirectoryStackScreen} />
-      <Tab.Screen name="My Pass" component={ProfileStackScreen} />
+      <Tab.Screen name="Profile" component={ProfileStackScreen} />
     </Tab.Navigator>
   );
 }
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   tabIcon: {
-    fontSize: 20,
+    fontSize: 18,
     color: COLORS.muted,
   },
   tabIconActive: {
