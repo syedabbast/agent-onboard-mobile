@@ -61,7 +61,8 @@ export default function SessionScreen({ route, navigation }) {
 
     async function init() {
       try {
-        const { data: me } = await getMyAgent();
+        const { data: { user } } = await supabase.auth.getUser();
+      const { data: me } = await getMyAgent(user.id);
         if (mounted && me) setMyAgent(me);
 
         await fetchConnection();
@@ -171,7 +172,7 @@ export default function SessionScreen({ route, navigation }) {
           connectionId,
           agentId: myAgent.id,
           action: 'message_sent',
-          details: { content_length: text.length },
+          metadata: { content_length: text.length },
         });
       }
     } catch (_) {
@@ -193,7 +194,7 @@ export default function SessionScreen({ route, navigation }) {
         connectionId,
         agentId: myAgent.id,
         action: 'message_approved',
-        details: { message_id: message.id },
+        metadata: { message_id: message.id },
       });
 
       haptics.success();
@@ -213,7 +214,7 @@ export default function SessionScreen({ route, navigation }) {
         connectionId,
         agentId: myAgent.id,
         action: 'connection_approved',
-        details: { approved_by: myAgent.name },
+        metadata: { approved_by: myAgent.name },
       });
 
       haptics.success();
@@ -303,7 +304,7 @@ export default function SessionScreen({ route, navigation }) {
         <View style={styles.statusBar}>
           <StatusPill status="pending" />
           <Text style={styles.statusText}>
-            Awaiting boarding clearance from {otherAgent?.name}
+            Awaiting boarding clearance from {otherAgent?.agent_name}
           </Text>
         </View>
       );

@@ -55,7 +55,8 @@ export default function ConnectScreen({ route, navigation }) {
         }
         if (mounted) setTargetAgent(target);
 
-        const { data: me } = await getMyAgent();
+        const { data: { user } } = await supabase.auth.getUser();
+      const { data: me } = await getMyAgent(user.id);
         if (mounted) setMyAgent(me);
 
         if (me && target) {
@@ -112,7 +113,7 @@ export default function ConnectScreen({ route, navigation }) {
           connectionId: conn.id,
           agentId: myAgent.id,
           action: 'connection_requested',
-          details: { purpose: purpose.trim(), target: targetAgent.name },
+          metadata: { purpose: purpose.trim(), target: targetAgent.agent_name },
         });
 
         haptics.success();
@@ -144,7 +145,7 @@ export default function ConnectScreen({ route, navigation }) {
           <Text style={styles.successEmoji}>{'✈️'}</Text>
           <Text style={styles.successTitle}>Connection Requested!</Text>
           <Text style={styles.successDesc}>
-            Your boarding request has been sent to {targetAgent?.name}. You will
+            Your boarding request has been sent to {targetAgent?.agent_name}. You will
             be notified when they respond.
           </Text>
           <TouchableOpacity
@@ -281,11 +282,11 @@ export default function ConnectScreen({ route, navigation }) {
           ) : targetAgent ? (
             <View style={styles.profileSection}>
               <AgentAvatar
-                name={targetAgent.name}
+                name={targetAgent.agent_name}
                 size={80}
                 agentType={targetAgent.agent_type}
               />
-              <Text style={styles.agentName}>{targetAgent.name}</Text>
+              <Text style={styles.agentName}>{targetAgent.agent_name}</Text>
               {targetAgent.company ? (
                 <Text style={styles.agentCompany}>{targetAgent.company}</Text>
               ) : null}

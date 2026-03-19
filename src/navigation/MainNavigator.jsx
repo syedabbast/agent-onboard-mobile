@@ -82,7 +82,7 @@ export default function MainNavigator() {
         tabBarStyle: styles.tabBar,
         tabBarLabelStyle: styles.tabLabel,
         tabBarIcon: ({ focused }) => (
-          <TabIcon label={route.name} focused={focused} />
+          <TabIcon label={route.agent_name} focused={focused} />
         ),
       })}
     >

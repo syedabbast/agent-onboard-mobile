@@ -40,8 +40,8 @@ export default function BoardingPass({
   const flightId = getFlightId(agent);
   const gate = getGate(agent.agent_type);
   const cls = getClass(agent.agent_type);
-  const qrValue = agent.share_token
-    ? `${appUrl}/connect/${agent.share_token}`
+  const qrValue = agent.qr_token
+    ? `${appUrl}/connect?token=${agent.qr_token}`
     : flightId;
 
   if (compact) {
@@ -50,7 +50,7 @@ export default function BoardingPass({
         <View style={styles.navyStripeCompact} />
         <View style={styles.compactContent}>
           <Text style={styles.compactName} numberOfLines={1}>
-            {agent.name}
+            {agent.agent_name}
           </Text>
           <Text style={styles.compactFlight}>{flightId}</Text>
         </View>
@@ -70,7 +70,7 @@ export default function BoardingPass({
           <View style={styles.field}>
             <Text style={styles.fieldLabel}>PASSENGER</Text>
             <Text style={styles.fieldValue} numberOfLines={1}>
-              {agent.name}
+              {agent.agent_name}
             </Text>
           </View>
           <StatusPill status="active" />

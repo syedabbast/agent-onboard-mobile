@@ -70,9 +70,9 @@ export default function ProfileScreen({ navigation }) {
 
   function handleShare() {
     haptics.medium();
-    const url = `${appUrl}/connect/${agent.share_token}`;
+    const url = `${appUrl}/connect?token=${agent.qr_token}`;
     Share.share({
-      message: `Connect with ${agent.name} on Agent OnBoard: ${url}`,
+      message: `Connect with ${agent.agent_name} on Agent OnBoard: ${url}`,
       url,
     });
   }
@@ -154,11 +154,11 @@ export default function ProfileScreen({ navigation }) {
 
         <View style={styles.avatarSection}>
           <AgentAvatar
-            name={agent.name}
+            name={agent.agent_name}
             size={80}
             agentType={agent.agent_type}
           />
-          <Text style={styles.agentName}>{agent.name}</Text>
+          <Text style={styles.agentName}>{agent.agent_name}</Text>
           {agent.company ? (
             <Text style={styles.agentCompany}>{agent.company}</Text>
           ) : null}

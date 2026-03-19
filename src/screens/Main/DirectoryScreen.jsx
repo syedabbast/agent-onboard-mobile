@@ -67,18 +67,18 @@ export default function DirectoryScreen({ navigation }) {
         style={styles.agentCard}
         onPress={() => {
           haptics.light();
-          navigation.navigate('Connect', { token: item.share_token });
+          navigation.navigate('Connect', { token: item.qr_token });
         }}
         activeOpacity={0.7}
       >
         <AgentAvatar
-          name={item.name}
+          name={item.agent_name}
           size={48}
           agentType={item.agent_type}
         />
         <View style={styles.cardInfo}>
           <Text style={styles.cardName} numberOfLines={1}>
-            {item.name}
+            {item.agent_name}
           </Text>
           {item.company ? (
             <Text style={styles.cardCompany} numberOfLines={1}>

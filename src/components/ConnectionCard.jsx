@@ -42,13 +42,13 @@ export default function ConnectionCard({
     >
       <View style={styles.header}>
         <AgentAvatar
-          name={otherAgent.name}
+          name={otherAgent.agent_name}
           size={44}
           agentType={otherAgent.agent_type}
         />
         <View style={styles.headerInfo}>
-          <Text style={styles.name} numberOfLines={1}>
-            {otherAgent.name}
+          <Text style={styles.agent_name} numberOfLines={1}>
+            {otherAgent.agent_name}
           </Text>
           {otherAgent.company ? (
             <Text style={styles.company} numberOfLines={1}>

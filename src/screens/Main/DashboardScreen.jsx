@@ -34,7 +34,8 @@ export default function DashboardScreen({ navigation }) {
 
   const fetchData = useCallback(async () => {
     try {
-      const { data: myAgent } = await getMyAgent();
+      const { data: { user } } = await supabase.auth.getUser();
+      const { data: myAgent } = await getMyAgent(user.id);
 
       if (!myAgent) {
         setLoading(false);
@@ -106,7 +107,7 @@ export default function DashboardScreen({ navigation }) {
         connectionId: connection.id,
         agentId: agent.id,
         action: 'connection_approved',
-        details: { approved_by: agent.name },
+        metadata: { approved_by: agent.name },
       });
 
       haptics.success();
@@ -128,7 +129,7 @@ export default function DashboardScreen({ navigation }) {
         connectionId: connection.id,
         agentId: agent.id,
         action: 'connection_declined',
-        details: { declined_by: agent.name },
+        metadata: { declined_by: agent.name },
       });
 
       haptics.warning();
@@ -141,16 +142,16 @@ export default function DashboardScreen({ navigation }) {
 
   function handleShare() {
     haptics.medium();
-    const url = `${appUrl}/connect/${agent.share_token}`;
+    const url = `${appUrl}/connect?token=${agent.qr_token}`;
     Share.share({
-      message: `Connect with ${agent.name} on Agent OnBoard: ${url}`,
+      message: `Connect with ${agent.agent_name} on Agent OnBoard: ${url}`,
       url,
     });
   }
 
   async function handleCopy() {
     haptics.light();
-    const url = `${appUrl}/connect/${agent.share_token}`;
+    const url = `${appUrl}/connect?token=${agent.qr_token}`;
     await Clipboard.setStringAsync(url);
     Alert.alert('Copied', 'Boarding pass link copied to clipboard');
   }
