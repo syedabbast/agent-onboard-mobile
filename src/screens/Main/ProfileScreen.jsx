@@ -7,6 +7,7 @@ import {
   Share,
   Alert,
   Switch,
+  Platform,
   StyleSheet,
   RefreshControl,
 } from 'react-native';
@@ -77,24 +78,28 @@ export default function ProfileScreen({ navigation }) {
     });
   }
 
-  function handleSignOut() {
-    Alert.alert(
-      'Disembark',
-      'Are you sure you want to sign out? You will need to board again.',
-      [
-        { text: 'Stay On Board', style: 'cancel' },
-        {
-          text: 'Disembark',
-          style: 'destructive',
-          onPress: async () => {
-            haptics.medium();
-            try {
-              await supabase.auth.signOut();
-            } catch (_) {}
+  async function handleSignOut() {
+    if (Platform.OS === 'web') {
+      if (window.confirm('Are you sure you want to sign out?')) {
+        try { await supabase.auth.signOut(); } catch (_) {}
+      }
+    } else {
+      Alert.alert(
+        'Disembark',
+        'Are you sure you want to sign out? You will need to board again.',
+        [
+          { text: 'Stay On Board', style: 'cancel' },
+          {
+            text: 'Disembark',
+            style: 'destructive',
+            onPress: async () => {
+              haptics.medium();
+              try { await supabase.auth.signOut(); } catch (_) {}
+            },
           },
-        },
-      ]
-    );
+        ]
+      );
+    }
   }
 
   if (loading) {
