@@ -17,7 +17,6 @@
     "@supabase/supabase-js": "^2.99.2",
     "date-fns": "^4.1.0",
     "expo": "~55.0.8",
-    "expo-barcode-scanner": "^13.0.1",
     "expo-camera": "~55.0.10",
     "expo-clipboard": "~55.0.9",
     "expo-haptics": "~55.0.9",

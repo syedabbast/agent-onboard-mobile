@@ -19,6 +19,7 @@ export default {
           'Agent OnBoard needs camera access to scan boarding pass QR codes at the gate.',
         NSPhotoLibraryUsageDescription:
           'Agent OnBoard needs photo library access to save your boarding pass.',
+        ITSAppUsesNonExemptEncryption: false,
       },
     },
     android: {
@@ -50,6 +51,9 @@ export default {
       supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL,
       supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
       appUrl: process.env.EXPO_PUBLIC_APP_URL,
+      eas: {
+        projectId: '1a807623-738a-45bb-af9a-c115a5ecd38b',
+      },
     },
   },
 };
